@@ -53,7 +53,7 @@ func (i *Iciba) getResult() *IcibaResult {
 	// get iciba api
 	resp, err := http.Get(translateUrl)
 	if err != nil {
-		errInfo := fmt.Sprintf("%s :%s", "网络连接异常，请检查网络状态",
+		errInfo := fmt.Sprintf("%s :%s", "網絡連接異常，請檢查網絡狀態",
 			strings.Join(strings.Split(err.Error(), ":")[2:], ":"))
 		fmt.Println(common.ColorIt(errInfo, common.Alert, i.style))
 	}
@@ -100,23 +100,23 @@ func (i *Iciba) Query() string {
 
 // format the result
 func (ir *IcibaResult) Format() string {
-	content := fmt.Sprintf("\n%s %s\n\n",
-		common.ColorIt("查询:", common.Title, ir.style),
+	content := fmt.Sprintf("\n%s %s\n",
+		common.ColorIt("查詢:", common.Title, ir.style),
 		common.ColorIt(ir.Key, common.Normal))
 
 	// phonetic
 	if pho := ir.phoneticFormat(); strings.TrimSpace(pho) != "" {
-		content += fmt.Sprintf("%s\n\n", pho)
+		content += fmt.Sprintf("%s\n", pho)
 	}
 
 	// definition
 	if exp := ir.acceptationFormat(); strings.TrimSpace(exp) != "" {
-		content += fmt.Sprintf("%s\n\n%s\n", common.ColorIt("Exps:", common.Title, ir.style), exp)
+		content += fmt.Sprintf("%s\n%s", common.ColorIt("解譯:", common.Title, ir.style), exp)
 	}
 
 	// samples
 	if sam := ir.sentFormat(); strings.TrimSpace(sam) != "" {
-		content += fmt.Sprintf("%s\n\n%s\n", common.ColorIt("例句:", common.Title, ir.style), sam)
+		content += fmt.Sprintf("%s\n%s\n", common.ColorIt("例句:", common.Title, ir.style), sam)
 	}
 
 	return content
@@ -130,10 +130,10 @@ func (ir *IcibaResult) phoneticFormat() string {
 		return context
 	}
 
-	context += common.ColorIt("英: ", common.Title, ir.style) +
+	context += common.ColorIt("  英: ", common.Title, ir.style) +
 		common.ColorIt(ir.Ps[0], common.Alert, ir.style) +
-		strings.Repeat(" ", 4)
-	context += common.ColorIt("美: ", common.Title, ir.style) +
+		strings.Repeat(" ", 2)
+	context += common.ColorIt("  美: ", common.Title, ir.style) +
 		common.ColorIt(ir.Ps[1], common.Alert, ir.style)
 
 	return context

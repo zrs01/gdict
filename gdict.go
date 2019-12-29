@@ -14,19 +14,19 @@ import (
 
 func main() {
 	// 朗读开关
-	say := flag.Bool("say", false, "使用系统发音软件朗读查询结果（MacOS only）")
+	say := flag.Bool("say", false, "saying result with system provided speech software（MacOS only）")
 	shortSay := flag.Bool("s", false, "")
 	// 配色方案
-	dark := flag.Bool("dark", true, "配色方案 dark")
-	light := flag.Bool("light", false, "配色方案 light")
+	dark := flag.Bool("dark", true, "dark theme")
+	light := flag.Bool("light", false, "light theme")
 	// engine
-	engStr := flag.String("e", "youdao", "指定字典引擎")
+	engStr := flag.String("e", "youdao", "choice dictionary engine (bing, iciba, youdao)")
 	// --help and -h
-	help := flag.Bool("help", false, "输出帮助信息")
+	help := flag.Bool("help", false, "help information")
 	shortHelp := flag.Bool("h", false, "")
 
 	// alfred 输出格式
-	workflow := flag.Bool("w", false, "是否使用Alfred输出模式")
+	workflow := flag.Bool("w", false, "use Alfred mode")
 
 	// auto parse
 	// 将查询的词语参数分离，让参数的使用更灵活
@@ -58,7 +58,7 @@ func main() {
 
 	// 检查
 	if len(queryList) < 1 {
-		fmt.Println("未输入参数")
+		fmt.Println("Missing parameters")
 		flag.Usage()
 		return
 	}

@@ -56,7 +56,7 @@ func (b *Bing) getResult() *Bing {
 	// get bing api
 	resp, err := http.Get(translateUrl)
 	if err != nil {
-		errInfo := fmt.Sprintf("%s :%s", "网络连接异常，请检查网络状态",
+		errInfo := fmt.Sprintf("%s :%s", "網絡連接異常，請檢查網絡狀態",
 			strings.Join(strings.Split(err.Error(), ":")[2:], ":"))
 		fmt.Println(common.ColorIt(errInfo, common.Alert, b.style))
 	}
@@ -103,23 +103,23 @@ func (b *Bing) Query() string {
 }
 
 func (br *bingResult) Format() string {
-	content := fmt.Sprintf("\n%s %s\n\n",
-		common.ColorIt("查询:", common.Title, br.style),
+	content := fmt.Sprintf("\n%s %s\n",
+		common.ColorIt("查詢:", common.Title, br.style),
 		common.ColorIt(br.Query, common.Normal))
 
 	// phonetic
 	if pho := br.phoneticFormat(); strings.TrimSpace(pho) != "" {
-		content += fmt.Sprintf("%s\n\n", pho)
+		content += fmt.Sprintf("%s\n", pho)
 	}
 
 	// definition
 	if exp := br.defFormat(); strings.TrimSpace(exp) != "" {
-		content += fmt.Sprintf("%s\n\n%s\n", common.ColorIt("Exps:", common.Title, br.style), exp)
+		content += fmt.Sprintf("%s\n%s", common.ColorIt("解譯:", common.Title, br.style), exp)
 	}
 
 	// samples
 	if sam := br.samFormat(); strings.TrimSpace(sam) != "" {
-		content += fmt.Sprintf("%s\n\n%s\n", common.ColorIt("例句:", common.Title, br.style), sam)
+		content += fmt.Sprintf("%s\n%s\n", common.ColorIt("例句:", common.Title, br.style), sam)
 	}
 
 	return content
@@ -132,10 +132,10 @@ func (br *bingResult) phoneticFormat() string {
 		return context
 	}
 
-	context += common.ColorIt("英: ", common.Title, br.style) +
+	context += common.ColorIt("  英: ", common.Title, br.style) +
 		common.ColorIt(br.Pronunciation.BrE, common.Alert, br.style) +
-		strings.Repeat(" ", 4)
-	context += common.ColorIt("美: ", common.Title, br.style) +
+		strings.Repeat(" ", 2)
+	context += common.ColorIt("  美: ", common.Title, br.style) +
 		common.ColorIt(br.Pronunciation.AmE, common.Alert, br.style)
 
 	return context

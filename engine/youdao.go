@@ -9,8 +9,9 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/liipx/gdict/common"
 	"os"
+
+	"github.com/liipx/gdict/common"
 )
 
 const ydAPIOld = "http://fanyi.youdao.com/openapi.do"
@@ -205,28 +206,28 @@ type web struct {
 
 // main format
 func (yr *YoudaoResult) Format() string {
-	content := fmt.Sprintf("\n%s %s\n\n",
-		common.ColorIt("查询:", common.Title, yr.style),
+	content := fmt.Sprintf("\n%s %s\n",
+		common.ColorIt("查詢:", common.Title, yr.style),
 		common.ColorIt(yr.Query, common.Normal))
 
 	// phonetic
 	if pho := yr.phoneticFormat(); strings.TrimSpace(pho) != "" {
-		content += fmt.Sprintf("%s\n\n", pho)
+		content += fmt.Sprintf("%s\n", pho)
 	}
 
 	// explains
 	if exp := yr.explainsFormat(); strings.TrimSpace(exp) != "" {
-		content += fmt.Sprintf("%s\n\n%s\n", common.ColorIt("Exps:", common.Title, yr.style), exp)
+		content += fmt.Sprintf("%s\n%s", common.ColorIt("解譯:", common.Title, yr.style), exp)
 	}
 
 	// translation
 	if tran := yr.transFormat(); strings.TrimSpace(tran) != "" {
-		content += fmt.Sprintf("%s\n\n%s\n\n", common.ColorIt("翻译:", common.Title, yr.style), tran)
+		content += fmt.Sprintf("%s\n%s\n", common.ColorIt("翻譯:", common.Title, yr.style), tran)
 	}
 
 	// web
 	if web := yr.webFormat(); strings.TrimSpace(web) != "" {
-		content += fmt.Sprintf("%s\n\n%s\n\n", common.ColorIt("网络释义:", common.Title, yr.style), web)
+		content += fmt.Sprintf("%s\n%s\n", common.ColorIt("網絡釋義:", common.Title, yr.style), web)
 	}
 
 	return content
@@ -261,10 +262,10 @@ func (yr *YoudaoResult) phoneticFormat() string {
 	if yr.Basic.UkPhonetic == "" && yr.Basic.UsPhonetic == "" && yr.Basic.Phonetic != "" {
 		context += common.ColorIt("拼音: ", common.Title, yr.style) + yr.Basic.Phonetic
 	} else if yr.Basic.UkPhonetic != "" || yr.Basic.UsPhonetic != "" {
-		context += common.ColorIt("英: ", common.Title, yr.style) +
+		context += common.ColorIt("  英: ", common.Title, yr.style) +
 			common.ColorIt(yr.Basic.UkPhonetic, common.Alert, yr.style) +
-			strings.Repeat(" ", 4)
-		context += common.ColorIt("美: ", common.Title, yr.style) +
+			strings.Repeat(" ", 2)
+		context += common.ColorIt("  美: ", common.Title, yr.style) +
 			common.ColorIt(yr.Basic.UsPhonetic, common.Alert, yr.style)
 	}
 	return context
